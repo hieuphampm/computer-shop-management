@@ -4,6 +4,7 @@ import { IoIosEye } from "react-icons/io";
 import { IoIosEyeOff } from "react-icons/io";
 import { Link } from 'react-router-dom';
 import imageTobase64 from '../helpers/imageTobase64';
+import SummaryApi from '../common';
 
 const SignUp = () => {
   const [showPassword,setShowPassword] = useState(false)
@@ -11,6 +12,7 @@ const SignUp = () => {
   const [data,setData] = useState({
         email : "",
         password : "",
+        name : "",
         confirmPassword : "",
         profilePic : "",
 
@@ -39,8 +41,17 @@ const SignUp = () => {
         })
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault()
+        const dataResponse = await fetch(SummaryApi.signUP.url,{
+            method : SummaryApi.signUP.method,
+            headers : {
+                "content-type" : "application/json"
+            },
+            body : JSON.stringify(data)
+        })
+        const data = await dataResponse.json();
+        console.log("data",data)
         
     }
 
