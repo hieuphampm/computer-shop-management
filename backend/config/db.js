@@ -1,13 +1,14 @@
-const mongoose = require("moongose")
+const mongoose = require('mongoose');
+require('dotenv').config(); // Tải biến môi trường
 
-
-
-async function connectDB {
-    try{
-        mongoose.connect(process.env.MONGODB_URI)
-
-    }catch(err){}
-        console.log(err)
+async function connectDB() {
+    try {
+        const conn = await mongoose.connect(process.env.MONGO_URI);
+        console.log(`MongoDB Connected: ${conn.connection.host}`);
+    } catch (error) {
+        console.error(`Error: ${error.message}`);
+        process.exit(1);
     }
-
 }
+
+module.exports = connectDB;
