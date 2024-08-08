@@ -33,11 +33,12 @@ async function userSignUpController(req,res){
 
         const payload = {
             ...req.body,
+            role : "GENERAL",
             password : hashPassword
         }
 
         const userData = new userModel(payload)
-        const saveUser = userData.save()
+        const saveUser = await userData.save()
 
         res.status(201).json({
             data : saveUser,
@@ -51,7 +52,7 @@ async function userSignUpController(req,res){
 
     }catch(err){
         res.json({
-            message : err,
+            message : err.message || err ,
             error : true,
             success : false,
         })
